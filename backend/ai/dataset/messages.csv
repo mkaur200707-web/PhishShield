@@ -1,0 +1,301 @@
+﻿message,label,language,category
+आपका बिजली बिल भुगतान प्राप्त हुआ।,LEGITIMATE,English,ELECTRICITY
+दान से पहले संस्था का पंजीकरण जांचें।,LEGITIMATE,English,CHARITY
+KYC update ke liye bank ki official branch jaayein.,LEGITIMATE,Hindi,KYC
+केवाईसी अपडेट नहीं हुई तो बैंक खाता बंद कर दिया जाएगा।,SCAM,English,KYC
+निवेश से पहले जोखिम और योजना के दस्तावेज़ पढ़ें।,LEGITIMATE,English,INVESTMENT
+प्रतियोगिता के परिणाम आधिकारिक वेबसाइट पर होंगे।,LEGITIMATE,English,PRIZE
+छात्रवृत्ति की स्थिति आधिकारिक पोर्टल पर देखें।,LEGITIMATE,English,SCHOLARSHIP
+सेवा जारी रखने के लिए निजी जानकारी भरें।,SCAM,English,SIM_CARD
+आपका खाता निलंबित होगा। तुरंत KYC सत्यापन करें।,SCAM,Hindi,KYC
+OTP sirf apne login process mein use karo.,LEGITIMATE,Hindi,OTP
+Check your SIP debit date in the official app.,LEGITIMATE,Hinglish,INVESTMENT
+Smart meter update ke liye app install karo aur fee do.,SCAM,Hinglish,ELECTRICITY
+Courier partner updated your shipment status.,LEGITIMATE,Hindi,DELIVERY
+Enter card PIN at claim-reward.example to claim your scholarship.,SCAM,Hindi,SCHOLARSHIP
+Aapka job application receive ho gaya hai.,LEGITIMATE,Hindi,JOB
+Contest terms and winners are on the organiser's official website.,LEGITIMATE,Hinglish,PRIZE
+पेंशन भुगतान आधिकारिक सरकारी पोर्टल पर देखें।,LEGITIMATE,English,TAX_GOVERNMENT
+Your order is out for delivery today.,LEGITIMATE,Hinglish,DELIVERY
+Verification code Instagram support ko bhejo.,SCAM,Hindi,ROMANCE_SOCIAL
+UPI collect request received. Approve only if you recognise it.,LEGITIMATE,Hindi,UPI
+Reply with Aadhaar and OTP to receive cash reward.,SCAM,Hindi,PRIZE
+Pay donor verification fee to receive charity grant.,SCAM,English,CHARITY
+पासवर्ड बदलने के बाद गतिविधि आधिकारिक ऐप में जांचें।,LEGITIMATE,English,ACCOUNT_SECURITY
+Your mobile recharge was successful.,LEGITIMATE,English,SIM_CARD
+5G upgrade ke liye Aadhaar aur OTP enter karo.,SCAM,Hinglish,SIM_CARD
+छात्रवृत्ति पाने के लिए सत्यापन शुल्क जमा करें।,SCAM,Hindi,SCHOLARSHIP
+Tax filing deadline is published on the department website.,LEGITIMATE,Hinglish,TAX_GOVERNMENT
+Enable two-factor authentication for social account safety.,LEGITIMATE,Hindi,ROMANCE_SOCIAL
+Your bank may request address proof through official channels.,LEGITIMATE,Hinglish,KYC
+IPO status official broker portal par dekhein.,LEGITIMATE,Hindi,INVESTMENT
+Cashback claim karne ke liye UPI PIN share karo.,SCAM,Hinglish,UPI
+"If money was debited after failure, check your bank statement.",LEGITIMATE,Hinglish,UPI
+सरकारी नौकरी पक्की। नियुक्ति पत्र के लिए फीस भेजें।,SCAM,English,JOB
+Verification ke naam par OTP forward karo.,SCAM,Hinglish,OTP
+Your order has been delivered. Thank you.,LEGITIMATE,Hindi,DELIVERY
+दान मैच होगा। पहले शुल्क भरें।,SCAM,English,CHARITY
+KYC ke liye OTP aur card details bhejo warna account suspend hoga.,SCAM,Hinglish,KYC
+Confirm your password at secure-update.example after suspicious login.,SCAM,English,ACCOUNT_SECURITY
+छात्रवृत्ति जारी करने के लिए ओटीपी साझा करें।,SCAM,English,SCHOLARSHIP
+Enter card details at secure-update.example for your voucher.,SCAM,English,PRIZE
+आपका खाता हैक हुआ है। लिंक पर पासवर्ड डालें।,SCAM,English,ACCOUNT_SECURITY
+लॉटरी की राशि के लिए UPI PIN साझा करें।,SCAM,English,PRIZE
+योजना की पात्रता आधिकारिक विभागीय वेबसाइट पर जांचें।,LEGITIMATE,English,TAX_GOVERNMENT
+Your parcel is held. Pay customs fee at secure-update.example.,SCAM,English,DELIVERY
+Pay courier charge to claim a free smartphone.,SCAM,Hinglish,PRIZE
+Confirm card details at secure-update.example for redelivery.,SCAM,English,DELIVERY
+Your demat statement is available through your registered broker.,LEGITIMATE,Hinglish,INVESTMENT
+कैशबैक की स्थिति आधिकारिक ऐप में देखें।,LEGITIMATE,English,PRIZE
+Relief ke naam par turant paise bhejo.,SCAM,Hinglish,CHARITY
+Your SIP instalment was processed. View it in the official app.,LEGITIMATE,Hinglish,INVESTMENT
+Your job application has been received.,LEGITIMATE,English,JOB
+Premium match ke liye refundable deposit bhejo.,SCAM,Hinglish,ROMANCE_SOCIAL
+निवेश से पहले पंजीकृत सलाहकार से जानकारी लें।,LEGITIMATE,English,INVESTMENT
+Winner ho. Claim karne ke liye ₹299 pay karo.,SCAM,Hindi,PRIZE
+Review your friend request in the social media app.,LEGITIMATE,Hinglish,ROMANCE_SOCIAL
+ATM cash withdrawal completed. Keep the receipt.,LEGITIMATE,Hindi,BANK_CARD
+बैंक सुरक्षा टीम को अपना पासवर्ड बताएं।,SCAM,Hinglish,ACCOUNT_SECURITY
+Password aur OTP support agent ko bhejo.,SCAM,Hindi,ACCOUNT_SECURITY
+Scholarship application submit ho chuki hai.,LEGITIMATE,Hindi,SCHOLARSHIP
+Send the six-digit OTP to avoid losing access.,SCAM,Hindi,OTP
+Investment se pehle risk documents padhein.,LEGITIMATE,Hindi,INVESTMENT
+बिजली बिल सुधारने के लिए कार्ड नंबर और OTP भेजें।,SCAM,English,ELECTRICITY
+Submit PAN and Aadhaar at secure-update.example to avoid account freeze.,SCAM,English,KYC
+Interview timing company email mein share ki gayi hai.,LEGITIMATE,Hindi,JOB
+Use the OTP only on the official page where you initiated login.,LEGITIMATE,English,OTP
+You are selected. Pay a registration fee of ₹999 today.,SCAM,English,JOB
+ओटीपी बताएं ताकि बैंक खाता सुरक्षित किया जा सके।,SCAM,Hindi,OTP
+Network issue ki complaint register hui hai.,LEGITIMATE,English,SIM_CARD
+बकाया बिल के कारण मीटर बंद होगा। लिंक खोलें।,SCAM,English,ELECTRICITY
+नौकरी आवेदन की अंतिम तिथि 15 नवंबर है।,LEGITIMATE,English,JOB
+Confirm identity at claim-reward.example for SIM replacement.,SCAM,Hindi,SIM_CARD
+कार्ड शुल्क वापसी के लिए बैंक पासवर्ड भेजें।,SCAM,English,BANK_CARD
+Mutual fund investments are subject to market risks.,LEGITIMATE,English,INVESTMENT
+आपका छात्रवृत्ति आवेदन प्राप्त हुआ है।,LEGITIMATE,English,SCHOLARSHIP
+कार्ड सत्यापन के लिए PIN भेजें।,SCAM,English,BANK_CARD
+Tax return submit ho gaya. Official portal par status dekhein.,LEGITIMATE,Hindi,TAX_GOVERNMENT
+Paise double scheme hai. Aaj deposit karo.,SCAM,Hindi,INVESTMENT
+Pay activation tax to withdraw trading profits.,SCAM,Hinglish,INVESTMENT
+पता ठीक करने के लिए लिंक खोलें और शुल्क दें।,SCAM,English,DELIVERY
+Aadhaar update appointment is confirmed at authorised centre.,LEGITIMATE,Hindi,TAX_GOVERNMENT
+आपका यूपीआई भुगतान सफल रहा।,LEGITIMATE,English,UPI
+Check KYC status on your bank's official website.,LEGITIMATE,Hinglish,KYC
+Payment reverse karne ke liye PIN secure-update.example par enter karo.,SCAM,English,UPI
+Redeem expiring card points at verify-account.example now.,SCAM,Hinglish,BANK_CARD
+इनाम की पुष्टि के लिए अभी भुगतान करें।,SCAM,English,PRIZE
+Send Aadhaar and OTP for donation tax benefit.,SCAM,Hinglish,CHARITY
+Relief fund activate karne ke liye bank details bhejo.,SCAM,Hindi,CHARITY
+आपने इनाम जीता है। पहले शुल्क जमा करें।,SCAM,Hindi,PRIZE
+Your UPI account will be disabled soon. Verify at claim-reward.example.,SCAM,Hindi,UPI
+Your UPI ID is blocked. Enter your UPI PIN at secure-update.example.,SCAM,English,UPI
+Check scholarship deadlines on the official education portal.,LEGITIMATE,Hinglish,SCHOLARSHIP
+SIM KYC pending hai. Details bhejo.,SCAM,Hinglish,SIM_CARD
+Pay ₹10 to reschedule delivery.,SCAM,Hindi,DELIVERY
+Review contest rules on the organiser's official website.,LEGITIMATE,Hinglish,PRIZE
+Data entry job ke liye ID activate karne ka payment karo.,SCAM,Hinglish,JOB
+पैसे वापस पाने के लिए QR स्कैन करें और PIN दर्ज करें।,SCAM,English,UPI
+अनजान अनुरोध के OTP को अनदेखा करें।,LEGITIMATE,English,OTP
+Pay customs fee before receiving your gift parcel.,SCAM,Hinglish,ROMANCE_SOCIAL
+Your replacement card was dispatched to your registered address.,LEGITIMATE,Hinglish,BANK_CARD
+Parcel release karne ke liye UPI PIN enter karo.,SCAM,Hinglish,DELIVERY
+Loyalty voucher account mein add hua hai.,LEGITIMATE,Hindi,PRIZE
+डिलीवरी एजेंट को OTP और बैंक विवरण भेजें।,SCAM,English,DELIVERY
+Work from home job guaranteed. Deposit ₹500 for training.,SCAM,Hinglish,JOB
+आपका आवेदन प्राप्त हुआ है। चयनित उम्मीदवारों से संपर्क होगा।,LEGITIMATE,English,JOB
+Verified relief camp details are on district administration site.,LEGITIMATE,Hindi,CHARITY
+Offer terms and expiry app mein di gayi hai.,LEGITIMATE,Hindi,PRIZE
+Scan this QR and enter UPI PIN to refund me.,SCAM,English,ROMANCE_SOCIAL
+UPI limit reset karne ke liye OTP bhejein.,SCAM,Hindi,UPI
+Interview is scheduled for Monday at 10 AM. Bring your resume.,LEGITIMATE,Hinglish,JOB
+Your account will be deleted. Login at secure-update.example.,SCAM,English,ACCOUNT_SECURITY
+टैक्स रिफंड पाने के लिए बैंक PIN दें।,SCAM,Hindi,TAX_GOVERNMENT
+Donation receipt email par bhej di gayi hai.,LEGITIMATE,Hindi,CHARITY
+पक्का रिटर्न पाने के लिए निजी खाते में राशि भेजें।,SCAM,English,INVESTMENT
+Your account recovery request was received.,LEGITIMATE,Hindi,ACCOUNT_SECURITY
+Enable two-factor authentication in official security settings.,LEGITIMATE,Hindi,ACCOUNT_SECURITY
+रसीद पाने के लिए कार्ड PIN साझा करें।,SCAM,English,CHARITY
+फोटो हटाने के लिए OTP और पासवर्ड भेजें।,SCAM,English,ROMANCE_SOCIAL
+Social profile privacy settings update ho gayi hain.,LEGITIMATE,Hindi,ROMANCE_SOCIAL
+Required scholarship documents are listed by the institution.,LEGITIMATE,Hinglish,SCHOLARSHIP
+रखरखाव के कारण कुछ समय बिजली बंद रहेगी।,LEGITIMATE,English,ELECTRICITY
+Power service will stop unless payment is made now.,SCAM,Hindi,ELECTRICITY
+आपके अनुरोध का OTP है। इसे साझा न करें।,LEGITIMATE,Hindi,OTP
+Recruitment details are on the official careers page.,LEGITIMATE,Hinglish,JOB
+भुगतान का विवरण बैंक ऐप में देखें।,LEGITIMATE,Hinglish,UPI
+Refund ke liye screen share karo.,SCAM,English,TAX_GOVERNMENT
+आपका मोबाइल रिचार्ज सफल रहा।,LEGITIMATE,English,SIM_CARD
+Pay a refundable background-check fee for your job.,SCAM,Hindi,JOB
+Card limit ke liye netbanking password batao.,SCAM,Hindi,BANK_CARD
+Documents verify ho rahe hain. Update portal par milega.,LEGITIMATE,Hindi,SCHOLARSHIP
+आयकर रिटर्न प्राप्त हुआ। स्थिति आधिकारिक पोर्टल पर देखें।,LEGITIMATE,English,TAX_GOVERNMENT
+Pay settlement amount through this link immediately.,SCAM,Hinglish,TAX_GOVERNMENT
+राहत के लिए निजी खाते में दान भेजें।,SCAM,Hindi,CHARITY
+Your UPI refund was processed. Check the official app.,LEGITIMATE,Hindi,UPI
+"Donate ₹100 and get ₹10,000 government reward.",SCAM,Hinglish,CHARITY
+Your credit card bill is due on the 12th.,LEGITIMATE,Hinglish,BANK_CARD
+Your bank statement is available in the official app.,LEGITIMATE,Hinglish,BANK_CARD
+Bank KYC complete hai. Details official app mein dekhein.,LEGITIMATE,Hindi,KYC
+कोड केवल अपने अनुरोध में उपयोग करें।,LEGITIMATE,English,OTP
+Password reset code sirf official page par enter karein.,LEGITIMATE,Hindi,OTP
+Bank KYC pending hai. Account bachane ke liye claim-reward.example par details bharo.,SCAM,Hindi,KYC
+Medical help ke liye registration fee pay karo.,SCAM,Hindi,CHARITY
+Share your login code with our verification agent.,SCAM,English,ROMANCE_SOCIAL
+"Never share OTP, including with people claiming to be bank staff.",LEGITIMATE,Hinglish,OTP
+Your debit card is blocked. Enter CVV and OTP at secure-update.example.,SCAM,English,BANK_CARD
+Your parcel has shipped. Track it in the courier's official app.,LEGITIMATE,English,DELIVERY
+Thank you for your donation. Receipt is in the charity portal.,LEGITIMATE,English,CHARITY
+Install this app to reverse suspicious card charges.,SCAM,Hinglish,BANK_CARD
+Send your bank OTP to transfer lottery winnings.,SCAM,Hinglish,PRIZE
+बैंक कर्मचारी को आया हुआ ओटीपी भेजें।,SCAM,English,OTP
+बिना जोखिम रोज़ मुनाफा। पैसे भेजें।,SCAM,English,INVESTMENT
+राहत केंद्रों की जानकारी जिला प्रशासन से लें।,LEGITIMATE,English,CHARITY
+Number disconnect hoga. OTP forward karo.,SCAM,Hinglish,SIM_CARD
+रिवॉर्ड पॉइंट्स की जानकारी आधिकारिक ऐप में है।,LEGITIMATE,English,PRIZE
+KYC appointment at the branch is confirmed.,LEGITIMATE,Hindi,KYC
+Your income tax return was received. Check official portal status.,LEGITIMATE,English,TAX_GOVERNMENT
+Strong password aur two-factor authentication use karein.,LEGITIMATE,English,ACCOUNT_SECURITY
+Reward points app mein check kar sakte hain.,LEGITIMATE,Hindi,PRIZE
+Pay the re-delivery charge or shipment is returned.,SCAM,Hindi,DELIVERY
+Fee reimbursement application review mein hai.,LEGITIMATE,Hindi,SCHOLARSHIP
+Crypto profit release ke liye recovery fee pay karo.,SCAM,Hindi,INVESTMENT
+आपका पार्सल भेज दिया गया है। ट्रैकिंग ऐप में देखें।,LEGITIMATE,English,DELIVERY
+केवाईसी प्रक्रिया पूरी हुई। आधिकारिक बैंक नंबर पर संपर्क करें।,LEGITIMATE,English,KYC
+आपका UPI बंद है। चालू करने के लिए PIN और OTP डालें।,SCAM,Hindi,UPI
+Send a security deposit to release your offer letter.,SCAM,Hindi,JOB
+Reply with OTP to receive your reward.,SCAM,Hindi,OTP
+आपका सोशल खाता बंद होगा। पासवर्ड डालें।,SCAM,Hindi,ROMANCE_SOCIAL
+Check PAN application status using the official tracking service.,LEGITIMATE,Hinglish,TAX_GOVERNMENT
+Network maintenance may affect service briefly.,LEGITIMATE,Hinglish,SIM_CARD
+Your OTP is for the login you requested. Do not share it.,LEGITIMATE,English,OTP
+Bijli connection cut ho jayega. Is link par pay karo.,SCAM,Hinglish,ELECTRICITY
+Case close karne ke liye payment karo.,SCAM,Hindi,ACCOUNT_SECURITY
+Your complaint is registered. Check status in the app.,LEGITIMATE,Hindi,ELECTRICITY
+लॉगिन आपने नहीं किया तो आधिकारिक सहायता केंद्र से संपर्क करें।,LEGITIMATE,Hinglish,ACCOUNT_SECURITY
+Scholarship ke liye bank OTP aur card details bhejo.,SCAM,Hinglish,SCHOLARSHIP
+Share your wallet seed phrase at secure-update.example.,SCAM,English,INVESTMENT
+A sign-in attempt was blocked. Review account activity.,LEGITIMATE,Hinglish,ACCOUNT_SECURITY
+लाभ पाने के लिए निजी खाते में शुल्क जमा करें।,SCAM,English,TAX_GOVERNMENT
+आपका सिम बंद होगा। ओटीपी तुरंत भेजें।,SCAM,English,OTP
+प्रोफ़ाइल की गोपनीयता सेटिंग्स अपडेट हुईं।,LEGITIMATE,English,ROMANCE_SOCIAL
+Gift parcel ke liye customs fee pay karo.,SCAM,Hinglish,ROMANCE_SOCIAL
+Your electricity bill payment has been received.,LEGITIMATE,English,ELECTRICITY
+Your bank KYC expires today. Verify immediately at secure-update.example.,SCAM,English,KYC
+NGO annual report official website par hai.,LEGITIMATE,Hindi,CHARITY
+Debit card payment successful raha.,LEGITIMATE,Hindi,BANK_CARD
+Your SIM stops today. Share OTP for reactivation.,SCAM,English,SIM_CARD
+सिम सेवा की जानकारी आधिकारिक ऐप में देखें।,LEGITIMATE,English,SIM_CARD
+Your SIM replacement request was logged at the store.,LEGITIMATE,Hindi,SIM_CARD
+Requested login ka OTP hai. Kisi se share na karein.,LEGITIMATE,Hinglish,OTP
+Install the requested app to remove a device infection.,SCAM,Hindi,ACCOUNT_SECURITY
+घर बैठे नौकरी के लिए verification fee जमा करें।,SCAM,English,JOB
+Parcel receive karne ke liye delivery fee pay karo.,SCAM,Hinglish,DELIVERY
+Check KYC status through your bank's official app.,LEGITIMATE,English,KYC
+म्यूचुअल फंड का मूल्य बाजार पर निर्भर करता है।,LEGITIMATE,English,INVESTMENT
+Bijli bill payment successful ho gaya hai.,LEGITIMATE,Hindi,ELECTRICITY
+Naya login hua hai. Official settings mein activity check karein.,LEGITIMATE,Hindi,ACCOUNT_SECURITY
+UPI payment receive karne ke liye PIN enter karo: verify-account.example.,SCAM,Hinglish,UPI
+आपके खाते की सुरक्षा जांच पूरी हुई।,LEGITIMATE,English,ROMANCE_SOCIAL
+Your monthly donation receipt was generated.,LEGITIMATE,Hinglish,CHARITY
+KYC agent ko OTP WhatsApp kar do.,SCAM,Hinglish,OTP
+आपका ऑर्डर डिलीवर हो गया है।,LEGITIMATE,English,DELIVERY
+बैंक KYC अधूरी है। खाता चालू रखने के लिए लिंक खोलें।,SCAM,Hinglish,KYC
+कार्ड बंद होगा। CVV और OTP दें।,SCAM,Hindi,BANK_CARD
+Job confirm karne ke liye registration fee pay karo.,SCAM,Hindi,JOB
+Your bill is available in the official utility app.,LEGITIMATE,Hinglish,ELECTRICITY
+Aapka UPI payment complete ho gaya hai.,LEGITIMATE,Hindi,UPI
+बिजली शिकायत की स्थिति आधिकारिक पोर्टल पर देखें।,LEGITIMATE,English,ELECTRICITY
+Subsidy status bank statement mein verify karein.,LEGITIMATE,Hindi,TAX_GOVERNMENT
+पैन कार्ड बंद होगा। निजी जानकारी भरें।,SCAM,Hindi,TAX_GOVERNMENT
+आपका पार्सल रुका है। डिलीवरी शुल्क भरें।,SCAM,Hindi,DELIVERY
+Aadhaar update ke liye OTP aur card details bhejo.,SCAM,Hindi,TAX_GOVERNMENT
+ATM upgrade ke liye secret code bhejo.,SCAM,Hindi,BANK_CARD
+A sign-in code was requested. Do not share it.,LEGITIMATE,English,ROMANCE_SOCIAL
+Your bank profile has an issue. Confirm identity at claim-reward.example.,SCAM,Hindi,KYC
+"You won ₹50,000. Pay tax to claim your reward.",SCAM,English,PRIZE
+Verify charity registration before donating.,LEGITIMATE,Hinglish,CHARITY
+Parcel delivery ke liye OTP WhatsApp par bhejo.,SCAM,Hinglish,DELIVERY
+Scholarship application unlock karne ko ₹499 pay karo.,SCAM,Hinglish,SCHOLARSHIP
+कार्ड लेनदेन बैंक स्टेटमेंट में देखें।,LEGITIMATE,English,BANK_CARD
+केवाईसी की स्थिति अपनी बैंक शाखा से जांचें।,LEGITIMATE,English,KYC
+Your scholarship is approved. Pay a fee to release funds.,SCAM,English,SCHOLARSHIP
+Reply with your full card number and PIN.,SCAM,English,BANK_CARD
+Use your bank's official app or verified helpline to block a card.,LEGITIMATE,Hindi,BANK_CARD
+Delivery kal ke liye reschedule hui hai.,LEGITIMATE,English,DELIVERY
+आपके KYC दस्तावेज़ प्राप्त हुए। स्थिति आधिकारिक ऐप में देखें।,LEGITIMATE,English,KYC
+Your parcel is on hold. Tell the agent your OTP.,SCAM,English,OTP
+The registered trust published its annual report online.,LEGITIMATE,Hinglish,CHARITY
+Donate to this personal UPI ID immediately.,SCAM,English,CHARITY
+"Daily 10% profit guaranteed. Join with ₹2,000.",SCAM,Hinglish,INVESTMENT
+Use your electricity provider's official website to view bills.,LEGITIMATE,Hinglish,ELECTRICITY
+Parcel dispatch ho gaya hai. Tracking app mein hai.,LEGITIMATE,Hindi,DELIVERY
+Selection hua hai. Appointment ke liye UPI fee bhejo.,SCAM,English,JOB
+A new device signed in. Review activity in security settings.,LEGITIMATE,English,ACCOUNT_SECURITY
+Your photo backup is complete in the official app.,LEGITIMATE,Hinglish,ROMANCE_SOCIAL
+Plan benefits are available in the operator's official app.,LEGITIMATE,Hindi,SIM_CARD
+आवेदन की स्थिति कॉलेज कार्यालय से जांचें।,LEGITIMATE,English,SCHOLARSHIP
+Scan this QR and enter your PIN to receive money.,SCAM,Hinglish,UPI
+Selection hua hai. Prize release fee bhejo.,SCAM,Hinglish,SCHOLARSHIP
+Pay a fine to avoid arrest in a fraud case.,SCAM,Hinglish,ACCOUNT_SECURITY
+आपके दान की रसीद ईमेल पर भेज दी गई है।,LEGITIMATE,English,CHARITY
+Cashback has been credited to your wallet.,LEGITIMATE,Hinglish,PRIZE
+आपके कार्ड से भुगतान सफल रहा।,LEGITIMATE,English,BANK_CARD
+Scheduled maintenance may interrupt power tomorrow.,LEGITIMATE,Hinglish,ELECTRICITY
+You received ₹750 through UPI. Check your bank statement.,LEGITIMATE,Hinglish,UPI
+Your student grant expires today. Submit details at secure-update.example.,SCAM,English,SCHOLARSHIP
+नई डिलीवरी जानकारी आधिकारिक ऐप में देखें।,LEGITIMATE,Hinglish,DELIVERY
+Login at claim-reward.example or your page will be deleted.,SCAM,Hindi,ROMANCE_SOCIAL
+Your scholarship application was submitted successfully.,LEGITIMATE,English,SCHOLARSHIP
+Your loyalty points balance is available in the official app.,LEGITIMATE,English,PRIZE
+Your data pack expires tomorrow. View plans in the official app.,LEGITIMATE,Hinglish,SIM_CARD
+Aapka bank account aaj band ho sakta hai. KYC update karo.,SCAM,English,KYC
+Pay activation fee for a free SIM upgrade.,SCAM,Hindi,SIM_CARD
+Pay a penalty immediately to avoid meter disconnection.,SCAM,English,ELECTRICITY
+Pay a file-opening charge for government subsidy.,SCAM,English,TAX_GOVERNMENT
+URGENT: Your account will be blocked unless you update KYC at verify-account.example.,SCAM,Hinglish,KYC
+Fine avoid karne ke liye personal UPI par pay karo.,SCAM,Hinglish,TAX_GOVERNMENT
+Share SIM PIN and bank details for service upgrade.,SCAM,English,SIM_CARD
+छात्रवृत्ति की राशि पाने के लिए तुरंत भुगतान करें।,SCAM,English,SCHOLARSHIP
+Double your money in seven days. Transfer funds now.,SCAM,English,INVESTMENT
+Meter reading visit is scheduled for tomorrow.,LEGITIMATE,Hindi,ELECTRICITY
+"Earn ₹5,000 daily with no interview. Pay joining charge.",SCAM,Hinglish,JOB
+Your account is hacked. Install this remote support app.,SCAM,Hinglish,ACCOUNT_SECURITY
+आज रात बिजली काट दी जाएगी। तुरंत बिल भरें।,SCAM,Hindi,ELECTRICITY
+Your password changed successfully. Contact official support if unexpected.,LEGITIMATE,Hinglish,ACCOUNT_SECURITY
+Refund pending hai. UPI PIN daal kar claim karo: secure-update.example.,SCAM,English,UPI
+Account activate karne ke liye deposit karo.,SCAM,Hindi,INVESTMENT
+₹250 ka UPI payment ho gaya hai.,LEGITIMATE,English,UPI
+A new comment was posted. View it in the official app.,LEGITIMATE,Hinglish,ROMANCE_SOCIAL
+Your PAN deactivates tonight unless verified at verify-account.example.,SCAM,Hinglish,TAX_GOVERNMENT
+Your pension payment was processed by the department.,LEGITIMATE,Hinglish,TAX_GOVERNMENT
+नया लॉगिन हुआ है। आधिकारिक सुरक्षा सेटिंग्स देखें।,LEGITIMATE,English,ACCOUNT_SECURITY
+Connection bachane ke liye OTP do.,SCAM,Hinglish,ELECTRICITY
+Electricity will be disconnected tonight. Pay at secure-update.example.,SCAM,English,ELECTRICITY
+"If you did not request this code, ignore the message.",LEGITIMATE,Hinglish,OTP
+Job details company website par verify karein.,LEGITIMATE,English,JOB
+Account recovery email update ho gaya hai.,LEGITIMATE,Hindi,ROMANCE_SOCIAL
+Interview feedback will be shared by the recruitment team.,LEGITIMATE,Hinglish,JOB
+Bank statement mein transaction details check karein.,LEGITIMATE,English,UPI
+Enter bank credentials at claim-reward.example for your subsidy.,SCAM,Hindi,ELECTRICITY
+Upload bank PIN and OTP to receive education grant.,SCAM,Hindi,SCHOLARSHIP
+Returns guaranteed nahi hote. Advisor se salah lein.,LEGITIMATE,Hindi,INVESTMENT
+Recharge successful hai. Plan details app mein dekhein.,LEGITIMATE,Hindi,SIM_CARD
+Apna OTP bata do warna bank access band ho jayega.,SCAM,Hinglish,OTP
+Your UPI payment of ₹500 was successful.,LEGITIMATE,English,UPI
+नए कार्ड का अनुरोध प्राप्त हुआ।,LEGITIMATE,English,BANK_CARD
+Check scholarship review status on the official student portal.,LEGITIMATE,Hinglish,SCHOLARSHIP
+नेटवर्क सेवा बहाल कर दी गई है।,LEGITIMATE,Hinglish,SIM_CARD
+Pay a penalty to restore your social account.,SCAM,English,ROMANCE_SOCIAL
+Tax refund ready. Enter PAN and bank password at secure-update.example.,SCAM,English,TAX_GOVERNMENT
+Your KYC documents were received. View status in the official app.,LEGITIMATE,Hinglish,KYC
+Screen sharing app kholo aur banking app open karo.,SCAM,English,ACCOUNT_SECURITY
+Pay subscription for guaranteed winning stock tips.,SCAM,Hinglish,INVESTMENT
+Check the courier app for the next delivery update.,LEGITIMATE,Hinglish,DELIVERY
+ATM card renew karne ke liye PIN aur CVV bhejo.,SCAM,Hinglish,BANK_CARD
+अनजान लिंक पर लॉगिन जानकारी दर्ज न करें।,LEGITIMATE,English,ROMANCE_SOCIAL
+Share the OTP to stop your account from suspension.,SCAM,English,OTP
+Resume receive hua. Status portal par dekhein.,LEGITIMATE,Hindi,JOB
+Lucky draw mein car jeeti hai. Processing fee bhejo.,SCAM,Hinglish,PRIZE
+सिम सत्यापन के लिए बैंक OTP साझा करें।,SCAM,English,SIM_CARD
+Your debit card transaction of ₹800 was approved.,LEGITIMATE,English,BANK_CARD
+आपका मोबाइल नंबर बंद होगा। OTP दें।,SCAM,Hindi,SIM_CARD
