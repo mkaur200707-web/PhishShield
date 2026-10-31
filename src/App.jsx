@@ -1,58 +1,1513 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { ShieldCheck, ShieldAlert, ArrowRight, ScanSearch, Link2, MessageSquareText, LayoutDashboard, History as HistoryIcon, Settings, Menu, X, LockKeyhole, Zap, CheckCircle2, AlertTriangle, Copy, RotateCcw, ExternalLink, ChevronRight, Sparkles, Search, Globe, FileText, Shield, CircleHelp, Upload, Image as ImageIcon, Trash2, Filter, BookOpen, Eye, XCircle, Check, Clock3 } from "lucide-react";
+import React, { useEffect, useState } from 'react';
 
-const sample = "URGENT! Your bank account will be blocked today. Update your KYC immediately by clicking this link and verify your details.";
-const navItems = [{id:"overview",label:"Overview",icon:LayoutDashboard},{id:"scanner",label:"Message scanner",icon:ScanSearch},{id:"history",label:"Scan history",icon:HistoryIcon},{id:"awareness",label:"Scam awareness",icon:BookOpen}];
+import {
+  ShieldCheck, ShieldAlert, LayoutDashboard, ScanSearch, History,
+  BookOpen, Bell, UserRound, LogOut, Menu, Link2, MessageSquareText,
+  QrCode, Image as ImageIcon, Phone, Globe, Activity, AlertTriangle,
+  CheckCircle2, Clock3, Upload, Trash2, ChevronRight, Sparkles,
+  MapPinned, Trophy, Languages, LockKeyhole, FileText, LifeBuoy,
+  ArrowRight, Eye, Zap, Mail, Smartphone, KeyRound, ExternalLink
+} from 'lucide-react';
 
-function Brand(){return <div className="brand"><span className="brand-mark"><ShieldCheck size={21}/></span><span>PhishShield <b>Bharat</b></span></div>}
-function Button({children,onClick,kind="primary",icon:Icon}){return <button className={`btn ${kind}`} onClick={onClick}>{Icon&&<Icon size={17}/ >}{children}</button>}
-function analyze(text){
- const s=text.toLowerCase();
- const groups=[
-  ["Urgency & pressure",["urgent","immediately","today","within 24 hours","expires","act now","last warning"]],
-  ["Account / KYC threat",["account blocked","account suspended","update kyc","kyc expired","verify your account"]],
-  ["Credential or OTP request",["share otp","send otp","enter otp","upi pin","password","cvv"]],
-  ["Payment demand",["registration fee","processing fee","pay now","claim reward","collect request"]],
-  ["Suspicious link language",["click here","verify through this link","open the link","http://","bit.ly","tinyurl"]]
- ];
- const hits=groups.filter(([_,words])=>words.some(w=>s.includes(w))).map(([name,words])=>({name,matched:words.filter(w=>s.includes(w))}));
- const score=Math.min(96,hits.reduce((n,h)=>n+([ "Credential or OTP request","Account / KYC threat"].includes(h.name)?27:18),8));
- const level=score>=65?"High":score>=35?"Medium":"Low";
- const explanations={"Urgency & pressure":"Creates time pressure so the recipient may act without checking.","Account / KYC threat":"Uses an account restriction or KYC warning to prompt an immediate response.","Credential or OTP request":"Mentions sensitive authentication or payment credentials. Never share these with anyone.","Payment demand":"Requests a fee, payment or money movement that should be independently verified.","Suspicious link language":"Encourages opening a link or uses a shortened/insecure URL pattern."};
- return {hits:hits.map(h=>({...h,explanation:explanations[h.name]})),score,level,confidence:hits.length?"Signals found":"Insufficient signals"};
+const STORE = 'phishshield_v2';
+
+const nav = [
+  ['overview','Overview',LayoutDashboard],
+  ['scanner','Security scanner',ScanSearch],
+  ['history','Scan history',History],
+  ['alerts','Threat alerts',Bell],
+  ['map','Threat map',MapPinned],
+  ['quiz','Awareness quiz',Trophy],
+  ['help','Emergency help',LifeBuoy],
+  ['profile','My profile',UserRound]
+];
+
+const sampleMessage = 'URGENT! Your bank account will be blocked today. Update your KYC immediately by clicking this link and verify your details.';
+
+function readStore() {
+  try {
+    return JSON.parse(localStorage.getItem(STORE) || '{}');
+  } catch {
+    return {};
+  }
 }
-function Landing({go}){return <div className="landing">
- <header className="topbar"><div className="container nav"><Brand/><nav><a href="#features">Features</a><a href="#how">How it works</a><a href="#indian-scams">Indian scam focus</a></nav><Button onClick={()=>go("scanner")}>Scan a message <ArrowRight size={16}/></Button></div></header>
- <main><section className="hero container"><div className="hero-copy"><div className="eyebrow"><span className="pulse"/> BUILT FOR INDIA'S DIGITAL SAFETY</div><h1>Pause. Check.<br/><span>Stay protected.</span></h1><p className="hero-lead">An AI-powered assistant that helps you understand suspicious messages and links before you take action.</p><div className="hero-actions"><Button onClick={()=>go("scanner")} icon={ScanSearch}>Check a suspicious message</Button><Button kind="secondary" onClick={()=>document.getElementById("how")?.scrollIntoView({behavior:"smooth"})}>See how it works <ArrowRight size={16}/></Button></div><div className="trust-row"><span><LockKeyhole size={15}/> Privacy-conscious analysis</span><span><ShieldCheck size={15}/> Explainable warnings</span><span><Zap size={15}/> Fast checks</span></div></div>
- <div className="hero-visual"><div className="orbit orbit-one"/><div className="orbit orbit-two"/><div className="scan-card"><div className="scan-top"><span className="window-dots"><i/><i/><i/></span><span className="scan-label"><span className="pulse"/> LIVE SCAN PREVIEW</span></div><div className="message-head"><span className="avatar"><MessageSquareText size={18}/></span><div><b>Unknown sender</b><small>SMS · Just now</small></div><span className="tag danger">Suspicious</span></div><div className="message-body">URGENT! Your bank account will be blocked today. Update your KYC immediately.</div><div className="risk-preview"><div><small>ILLUSTRATIVE RISK LEVEL</small><b>High risk</b><span>Multiple warning signs detected</span></div><div className="risk-ring">!</div></div><div className="preview-points"><span><AlertTriangle size={14}/> Creates urgency</span><span><AlertTriangle size={14}/> Requests KYC action</span><span><AlertTriangle size={14}/> Pressures user to act</span></div><div className="preview-foot"><ShieldCheck size={16}/> Understand the warning. Choose a safer next step.</div></div><div className="float-chip chip-a"><ShieldCheck size={16}/> Explainable analysis</div><div className="float-chip chip-b"><Sparkles size={16}/> AI + detection rules</div></div></section>
- <section className="stats-strip"><div className="container stats-inner"><div><b>01</b><span>Submit a message or URL</span></div><div><b>02</b><span>Review warning indicators</span></div><div><b>03</b><span>Choose a safer next step</span></div></div></section>
- <section id="features" className="section container"><div className="section-heading"><div className="eyebrow">WHAT PHISHSHIELD DOES</div><h2>More than a warning.<br/><span>Clarity when it matters.</span></h2><p>Turn confusing messages into understandable signals and practical safety guidance.</p></div><div className="feature-grid"><Feature icon={ScanSearch} title="Message analysis" text="Check suspicious SMS, WhatsApp and email text for common scam indicators."/><Feature icon={Globe} title="URL checks" text="Inspect link patterns and, when connected, compare against threat-intelligence sources."/><Feature icon={Sparkles} title="AI explanations" text="Get a plain-language explanation of why a message may be risky."/><Feature icon={ShieldCheck} title="Safer next steps" text="Know what not to share, where to verify, and how to avoid rushed decisions."/></div></section>
- <section id="how" className="section section-soft"><div className="container"><div className="section-heading centered"><div className="eyebrow">SIMPLE BY DESIGN</div><h2>How it works</h2><p>Three clear steps between doubt and a safer decision.</p></div><div className="steps"><Step n="01" icon={FileText} title="Paste or submit" text="Add a suspicious message or a website link you want to check."/><Step n="02" icon={ScanSearch} title="Analyse signals" text="Detection rules and AI look for pressure tactics, requests and suspicious patterns."/><Step n="03" icon={ShieldCheck} title="Understand & act" text="Review risk indicators, explanations and practical safety guidance."/></div></div></section>
- <section id="indian-scams" className="section container"><div className="indian-panel"><div><div className="eyebrow">INDIA-FIRST APPROACH</div><h2>Designed around the scams people actually encounter.</h2><p>Our focus includes UPI-related lures, fake KYC alerts, job-fee scams, scholarship messages and OTP theft attempts — with support planned for English, Hindi and Hinglish.</p><Button onClick={()=>go("scanner")}>Try the message scanner <ArrowRight size={16}/></Button></div><div className="scam-tags"><span>UPI & payment lures</span><span>Fake KYC alerts</span><span>OTP requests</span><span>Fake job offers</span><span>Scholarship scams</span><span>Urgent account threats</span></div></div></section>
- <section className="cta container"><div className="cta-box"><div className="cta-icon"><ShieldCheck size={28}/></div><div><h2>Not sure about a message?</h2><p>Check the warning signs before you click, pay or share.</p></div><Button onClick={()=>go("scanner")}>Scan a message <ArrowRight size={16}/></Button></div></section></main>
- <footer><div className="container footer-inner"><Brand/><p>Helping people make safer digital decisions.</p><small>Demo interface · Detection results are indicative, not a guarantee.</small></div></footer>
- </div>}
-function Feature({icon:Icon,title,text}){return <article className="feature-card"><span className="feature-icon"><Icon size={21}/></span><h3>{title}</h3><p>{text}</p><span className="feature-arrow"><ArrowRight size={16}/></span></article>}
-function Step({n,icon:Icon,title,text}){return <article className="step-card"><div className="step-icon"><Icon size={24}/><b>{n}</b></div><h3>{title}</h3><p>{text}</p></article>}
-function Sidebar({page,setPage,open,setOpen}){return <><aside className={`sidebar ${open?"show":""}`}><div className="side-brand"><Brand/><button className="icon-btn mobile-close" onClick={()=>setOpen(false)}><X/></button></div><div className="side-caption">WORKSPACE</div><div className="side-nav">{navItems.map(item=><button key={item.id} className={page===item.id?"active":""} onClick={()=>{setPage(item.id);setOpen(false)}}><item.icon size={18}/>{item.label}{item.id==="scanner"&&<span className="new-pill">TRY</span>}</button>)}</div><div className="side-bottom"><div className="privacy-card"><ShieldCheck size={19}/><b>Your safety comes first</b><p>Never share OTPs, PINs or passwords with anyone.</p></div><div className="profile"><div className="profile-avatar">PB</div><div><b>PhishShield Bharat</b><small>Demo workspace</small></div></div></div></aside>{open&&<button className="sidebar-overlay" onClick={()=>setOpen(false)} aria-label="Close menu"/>}</>}
-function Dashboard({go}){return <div className="dash-content"><div className="welcome-row"><div><div className="eyebrow">SECURITY WORKSPACE</div><h1>Good to see you.</h1><p>Stay one step ahead of suspicious messages and links.</p></div><Button onClick={()=>go("scanner")} icon={ScanSearch}>New scan</Button></div><div className="notice"><span><Sparkles size={17}/></span><div><b>Your digital safety toolkit</b><p>Start with a message or link that doesn't feel right. We'll help you review the warning signs.</p></div><button onClick={()=>go("scanner")}>Start scanning <ChevronRight size={16}/></button></div><div className="dash-grid"><div className="dash-card main-card"><div className="card-top"><div><h3>Quick scan</h3><p>Check a message before you act.</p></div><span className="feature-icon"><MessageSquareText size={20}/></span></div><div className="quick-scan"><div className="quick-scan-art"><ShieldCheck size={38}/></div><div><b>Something feel suspicious?</b><p>Paste the message and get a clear breakdown of potential warning signs.</p><Button onClick={()=>go("scanner")}>Open message scanner <ArrowRight size={15}/></Button></div></div></div><div className="dash-card"><div className="card-top"><div><h3>Safety checklist</h3><p>Keep these habits in mind.</p></div><ShieldCheck size={20} className="green"/></div><ul className="check-list"><li><CheckCircle2/> Never share OTP or UPI PIN</li><li><CheckCircle2/> Verify through official apps</li><li><CheckCircle2/> Don't rush because of threats</li><li><CheckCircle2/> Check links before opening</li></ul></div></div><div className="dash-grid lower-grid"><div className="dash-card"><div className="card-top"><div><h3>Scams to watch for</h3><p>Common patterns seen in India</p></div><AlertTriangle className="amber"/></div><div className="watch-list"><span>Fake KYC update requests <b>01</b></span><span>UPI collect / payment lures <b>02</b></span><span>Fake job registration fees <b>03</b></span><span>OTP and account takeover <b>04</b></span></div></div><div className="dash-card"><div className="card-top"><div><h3>How results work</h3><p>Transparent, not just a score</p></div><CircleHelp className="green"/></div><p className="muted-copy">Results combine known warning indicators with contextual analysis. A risk label is an estimate, not proof that a message is fraudulent or safe.</p><button className="text-link" onClick={()=>go("scanner")}>Try an example <ArrowRight size={15}/></button></div></div><div className="disclaimer"><LockKeyhole size={15}/> Demo workspace: no real scan statistics are displayed or claimed.</div></div>}
-function RiskMeter({score,level}){return <div className={`meter-wrap ${level.toLowerCase()}`}><div className="meter-ring" style={{"--score":`${score*3.6}deg`}}><div className="meter-inner"><b>{score}</b><small>/ 100</small></div></div><div className="meter-caption"><span className="eyebrow">INDICATIVE RISK SCORE</span><strong>{level} risk</strong><small>Animated signal meter · not a probability</small></div></div>}
-function Scanner({onSave}){const [text,setText]=useState("");const [result,setResult]=useState(null);const [mode,setMode]=useState("message");const [busy,setBusy]=useState(false);const [image,setImage]=useState(null);const [imageName,setImageName]=useState("");useEffect(()=>{const handler=e=>{const item=e.detail;if(item){setText(item.message||"");setMode(item.mode||"message");setResult({hits:item.hits||[],score:item.score||0,level:item.level||"Low",confidence:item.hits?.length?"Signals found":"Insufficient signals"});}};window.addEventListener("phishshield:open-scan",handler);return()=>window.removeEventListener("phishshield:open-scan",handler)},[]);
- const scan=()=>{if(!text.trim())return;setBusy(true);setResult(null);setTimeout(()=>{const analysis=analyze(text);setResult(analysis);onSave({message:text,mode, ...analysis});setBusy(false)},550)};
- const load=()=>{setText(sample);setResult(null)};
- const pickImage=e=>{const file=e.target.files?.[0];if(!file)return;if(!file.type.startsWith("image/")){alert("Please select an image file.");return;}setImage(URL.createObjectURL(file));setImageName(file.name);};
- const data=result;
- return <div className="dash-content"><div className="welcome-row"><div><div className="eyebrow">PHISHSHIELD ANALYSIS</div><h1>Check before you click.</h1><p>Review suspicious messages and understand the signals behind them.</p></div><span className="secure-badge"><LockKeyhole size={14}/> Private demo scan</span></div><div className="scanner-layout"><div className="dash-card scanner-card"><div className="mode-tabs"><button className={mode==="message"?"selected":""} onClick={()=>{setMode("message");setResult(null)}}><MessageSquareText size={16}/> Message</button><button className={mode==="url"?"selected":""} onClick={()=>{setMode("url");setResult(null)}}><Link2 size={16}/> URL</button></div><label>{mode==="message"?"Paste the suspicious message":"Paste the website URL"}</label><textarea value={text} onChange={e=>{setText(e.target.value);setResult(null)}} placeholder={mode==="message"?"Paste an SMS, WhatsApp message or email here…":"https://example.com"} rows={8}/><div className="input-foot"><span>{text.length} characters</span><button onClick={load}><RotateCcw size={14}/> Load sample message</button></div>
- <div className="upload-panel"><div className="upload-title"><ImageIcon size={17}/><div><b>Have a screenshot?</b><small>Upload an SMS or chat screenshot for reference</small></div></div><label className="upload-drop"><Upload size={18}/><span>{imageName||"Choose image (PNG, JPG, WEBP)"}</span><input type="file" accept="image/*" onChange={pickImage}/></label>{image&&<div className="image-preview"><img src={image} alt="Uploaded suspicious message screenshot"/><button onClick={()=>{URL.revokeObjectURL(image);setImage(null);setImageName("")}} aria-label="Remove screenshot"><XCircle size={17}/></button></div>}<p className="upload-hint">Image preview only in this demo. OCR is not connected yet—paste the screenshot text above to analyse it.</p></div>
- <div className="scan-actions"><Button onClick={scan} icon={ScanSearch}>{busy?"Analysing…":"Analyse message"}</Button><button className="clear-btn" onClick={()=>{setText("");setResult(null);setImage(null);setImageName("")}}>Clear</button></div><div className="privacy-note"><LockKeyhole size={14}/> Demo-only local analysis. Avoid entering personal or financial information.</div></div>
- <div className="dash-card how-card"><div className="card-top"><div><h3>What we look for</h3><p>Common warning indicators</p></div><ShieldCheck className="green"/></div><div className="signal-list"><span><Zap/> Urgent or threatening language</span><span><LockKeyhole/> OTP, PIN or credential requests</span><span><FileText/> KYC or account suspension claims</span><span><Link2/> Link and payment pressure</span></div><div className="mini-tip"><b>Remember</b><p>A familiar keyword alone does not prove a scam. Context matters.</p></div></div></div>
- {data&&<div className="result-card"><div className="result-head"><div><div className="eyebrow">DETAILED SCAN RESULT</div><h2>Analysis complete</h2></div><span className={`tag ${data.level.toLowerCase()}`}>{data.level} risk</span></div><div className="result-body"><RiskMeter score={data.score} level={data.level}/><div className="result-summary"><h3>{data.level==="High"?"Several warning signs detected":data.level==="Medium"?"Some warning signs detected":"Few known warning signs detected"}</h3><p>{data.level==="High"?"Treat this message with caution. Do not click links or share sensitive information until you verify independently.":data.level==="Medium"?"Pause and verify the sender and any request through an official channel.":"No strong matches were found in this basic demo check. This does not guarantee the message is safe."}</p><span className="confidence-pill"><Eye size={13}/> Evidence status: {data.confidence}</span></div></div><div className="analysis-breakdown"><div className="breakdown-heading"><h3>Why this result?</h3><span>{data.hits.length} indicator group(s)</span></div>{data.hits.length?data.hits.map(h=><div className="explain-row" key={h.name}><span className="explain-icon"><AlertTriangle size={17}/></span><div><b>{h.name}</b><p>{h.explanation}</p><small>Matched text: {h.matched.join(", ")}</small></div></div>):<div className="no-signals"><CheckCircle2 size={17}/> No known keyword rules matched. This is not proof that the content is safe.</div>}</div><div className="result-details"><div className="advice-box"><h3><ShieldCheck size={17}/> Recommended next steps</h3><ul><li>Do not share OTP, PIN, password or CVV.</li><li>Do not use links in unexpected messages.</li><li>Verify requests using the official app or website.</li><li>If money is lost, contact your bank immediately and report via India's cybercrime helpline 1930.</li></ul></div></div><div className="result-disclaimer"><AlertTriangle size={15}/> This is a rule-based demonstration, not a validated security verdict. Risk score is not a probability. Screenshot OCR, backend AI and URL reputation checks are not connected.</div></div>}
- </div>}
-function History({items,onDelete,onClear,onOpen}){const [filter,setFilter]=useState("All");const visible=items.filter(x=>filter==="All"||x.level===filter);return <div className="dash-content"><div className="welcome-row"><div><div className="eyebrow">YOUR ACTIVITY · SAVED ON THIS DEVICE</div><h1>Scan history</h1><p>{items.length} saved scan{items.length===1?"":"s"}. History stays in this browser.</p></div>{items.length>0&&<Button kind="secondary" icon={Trash2} onClick={onClear}>Clear all</Button>}</div><div className="history-toolbar"><div className="filter-label"><Filter size={15}/> Filter by risk</div><div className="filter-tabs">{["All","High","Medium","Low"].map(f=><button key={f} className={filter===f?"selected":""} onClick={()=>setFilter(f)}>{f}</button>)}</div></div>{visible.length?<div className="history-list">{visible.map(item=><article className="history-item" key={item.id}><div className={`history-risk ${item.level.toLowerCase()}`}><ShieldAlert size={19}/></div><div className="history-main"><div className="history-title"><b>{item.mode==="url"?"URL scan":"Message scan"}</b><span className={`tag ${item.level.toLowerCase()}`}>{item.level} risk</span></div><p>{item.message}</p><small><Clock3 size={12}/> {new Date(item.date).toLocaleString()} · Score {item.score}/100 · {item.hits?.length||0} indicators</small></div><div className="history-actions"><button onClick={()=>onOpen(item)} title="View saved result"><Eye size={17}/></button><button onClick={()=>onDelete(item.id)} title="Delete scan"><Trash2 size={17}/></button></div></article>)}</div>:<div className="empty-state dash-card"><span><HistoryIcon size={28}/></span><h3>{items.length?"No scans in this filter":"No saved scans yet"}</h3><p>{items.length?"Try another risk filter.":"Scan a suspicious message and its result will appear here automatically."}</p></div>}<p className="history-privacy"><LockKeyhole size={14}/> Stored locally in this browser only. Clearing browser site data may remove this history.</p></div>}
-const awarenessItems=[{title:"Fake KYC / account-block alert",tag:"Banking & identity",desc:"A message claims your bank account or SIM will be blocked unless you update KYC through an included link.",tips:["Do not open the message link.","Open your bank's official app or type its known website address yourself.","Never share OTP, PIN or card details."]},{title:"UPI collect request / payment lure",tag:"UPI & payments",desc:"A stranger says you must approve a collect request to receive money, a refund, prize or delivery.",tips:["Receiving money does not require entering your UPI PIN.","Read the UPI app screen carefully before approving.","Decline unexpected collect requests."]},{title:"Fake job and registration-fee offer",tag:"Jobs & recruitment",desc:"An offer promises quick employment but asks for a registration, training, verification or interview fee upfront.",tips:["Verify the employer using its official careers website.","Be cautious of guaranteed jobs and pressure to pay quickly.","Do not send identity documents to unverified contacts."]},{title:"Scholarship / prize claim scam",tag:"Scholarships & rewards",desc:"A message says you have won a grant or prize and asks for a fee, bank details or an OTP to release it.",tips:["Check the scheme on an official government or institution website.","Do not pay a fee to unlock an unexpected reward.","Never disclose OTPs or UPI PINs."]},{title:"OTP and account takeover attempt",tag:"Account security",desc:"Someone asks you to read out an OTP or approve a login, device-linking or account recovery request.",tips:["Keep OTPs private, even if the caller claims to be support.","Reject login prompts you did not initiate.","Change credentials through the official app if you suspect access." ]}];
-function Awareness(){return <div className="dash-content"><div className="welcome-row"><div><div className="eyebrow">INDIA-FIRST DIGITAL SAFETY</div><h1>Scam awareness centre</h1><p>Learn common scam patterns and safer ways to respond.</p></div><span className="secure-badge"><BookOpen size={14}/> Learn · Verify · Protect</span></div><div className="awareness-banner"><ShieldCheck size={26}/><div><b>Pause before you act.</b><p>Scammers often create urgency, impersonate trusted organisations or ask for money and secrets.</p></div></div><div className="awareness-grid">{awarenessItems.map((item,i)=><article className="awareness-card" key={item.title}><div className="awareness-card-top"><span className="awareness-number">0{i+1}</span><span className="awareness-tag">{item.tag}</span></div><h3>{item.title}</h3><p>{item.desc}</p><div className="awareness-tips"><b>Safer response</b>{item.tips.map(t=><span key={t}><Check size={14}/>{t}</span>)}</div></article>)}</div><div className="report-reminder"><AlertTriangle size={18}/><p><b>If you have lost money:</b> Contact your bank/payment provider immediately and report financial cyber fraud through India's 1930 helpline or the official National Cyber Crime Reporting Portal.</p></div></div>}
-export default function App(){const [page,setPage]=useState("home"),[menu,setMenu]=useState(false);const [history,setHistory]=useState(()=>{try{return JSON.parse(localStorage.getItem("phishshield_history")||"[]")}catch{return []}});useEffect(()=>{localStorage.setItem("phishshield_history",JSON.stringify(history))},[history]);const go=p=>{setPage(p);setMenu(false);window.scrollTo({top:0,behavior:"smooth"})};const saveScan=scan=>setHistory(old=>[{...scan,id:Date.now(),date:new Date().toISOString()},...old].slice(0,100));const removeScan=id=>setHistory(old=>old.filter(x=>x.id!==id));const clearHistory=()=>{if(window.confirm("Delete all saved scan history from this browser?"))setHistory([])};const openSaved=item=>{go("scanner");window.setTimeout(()=>window.dispatchEvent(new CustomEvent("phishshield:open-scan",{detail:item})),50)};
- if(page==="home")return <Landing go={go}/>;
- const pageLabel=page==="overview"?"Overview":page==="scanner"?"Message scanner":page==="history"?"Scan history":"Scam awareness";
- return <div className="dashboard-shell"><Sidebar page={page} setPage={go} open={menu} setOpen={setMenu}/><main className="dash-main"><header className="dash-topbar"><button className="icon-btn menu-trigger" onClick={()=>setMenu(true)}><Menu/></button><div className="crumb"><span>Workspace</span><ChevronRight size={14}/><b>{pageLabel}</b></div><div className="top-right"><span className="status-dot"/> Demo mode <button className="avatar-small">PB</button></div></header>{page==="overview"?<Dashboard go={go}/>:page==="scanner"?<Scanner onSave={saveScan}/>:page==="history"?<History items={history} onDelete={removeScan} onClear={clearHistory} onOpen={openSaved}/>:<Awareness/>}<footer className="dash-footer"><Brand/><span>Stay alert. Stay protected. <b>·</b> Demo interface</span></footer></main></div>
+
+function Brand() {
+  return <div className="brand">
+    <span className="brand-icon"><ShieldCheck size={22}/></span>
+    <span>PhishShield <b>Bharat</b></span>
+  </div>;
+}
+
+function Btn({children,onClick,variant='primary',icon:Icon,disabled=false}) {
+  return <button disabled={disabled} className={`btn ${variant}`} onClick={onClick}>
+    {Icon && <Icon size={16}/>} {children}
+  </button>;
+}
+
+function Tag({level='Low'}) {
+  return <span className={`tag ${level.toLowerCase()}`}>{level} risk</span>;
+}
+
+function Field({label,icon:Icon,...props}) {
+  return <label className="field">
+    <span>{label}</span>
+    <div className="field-wrap">
+      {Icon && <Icon size={17}/>}
+      <input {...props}/>
+    </div>
+  </label>;
+}
+
+/* ---------------- AUTHENTICATION ---------------- */
+
+function Auth({onDone}) {
+  const [mode, setMode] = useState('signup');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+
+  const submit = (e) => {
+    e.preventDefault();
+    setError('');
+
+    if (!email.trim() || !password.trim()) {
+      setError('Please enter your email and password.');
+      return;
+    }
+
+    if (mode === 'signup') {
+      if (
+        !name.trim() ||
+        !/^\S+@\S+\.\S+$/.test(email) ||
+        phone.replace(/\D/g, '').length < 10
+      ) {
+        setError('Please enter your name, valid email and 10-digit phone number.');
+        return;
+      }
+    }
+
+    onDone({
+      name: mode === 'signup' ? name : (name || email.split('@')[0]),
+      email,
+      phone,
+      language: 'English'
+    });
+  };
+
+  return <div className="auth-page">
+    <div className="auth-glow one"/>
+    <div className="auth-glow two"/>
+
+    <div className="auth-card">
+      <div className="auth-brand">
+        <Brand/>
+        <span className="secure-label">
+          <LockKeyhole size={13}/> SECURE WORKSPACE
+        </span>
+      </div>
+
+      <div className="auth-art">
+        <div className="auth-orbit"><ShieldCheck size={46}/></div>
+        <span className="float-dot dot1"/>
+        <span className="float-dot dot2"/>
+        <span className="float-dot dot3"/>
+      </div>
+
+      <div className="eyebrow">YOUR DIGITAL SAFETY STARTS HERE</div>
+      <h1>{mode === 'signup' ? 'Create your account' : 'Welcome back'}</h1>
+
+      <p className="muted">
+        {mode === 'signup'
+          ? 'Create your PhishShield account and stay protected.'
+          : 'Login to continue to your security workspace.'}
+      </p>
+
+      <form onSubmit={submit} className="form-stack">
+        {mode === 'signup' && <>
+          <Field
+            label="First name"
+            icon={UserRound}
+            placeholder="Your first name"
+            value={name}
+            onChange={e => setName(e.target.value)}
+            required
+          />
+
+          <Field
+            label="Phone number"
+            icon={Smartphone}
+            type="tel"
+            placeholder="+91 98765 43210"
+            value={phone}
+            onChange={e => setPhone(e.target.value)}
+            required
+          />
+        </>}
+
+        <Field
+          label="Email address"
+          icon={Mail}
+          type="email"
+          placeholder="you@example.com"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+          required
+        />
+
+        <Field
+          label="Password"
+          icon={LockKeyhole}
+          type="password"
+          placeholder="Enter your password"
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+          required
+        />
+
+        <Btn variant="primary full" icon={ArrowRight}>
+          {mode === 'signup' ? 'Create account' : 'Login'}
+        </Btn>
+      </form>
+
+      {error && <p className="error-text">{error}</p>}
+
+      <p className="auth-switch">
+        {mode === 'signup' ? 'Already have an account?' : 'New to PhishShield?'}
+        <button
+          type="button"
+          onClick={() => {
+            setMode(mode === 'signup' ? 'login' : 'signup');
+            setError('');
+          }}
+        >
+          {mode === 'signup' ? 'Sign in' : 'Create account'}
+        </button>
+      </p>
+
+      <div className="auth-foot">
+        <ShieldCheck size={14}/>
+        Your safety workspace · Frontend demonstration
+      </div>
+    </div>
+  </div>;
+}
+
+/* ---------------- SCAN ANALYSIS ---------------- */
+
+function analyseMessage(text) {
+  const s = text.toLowerCase();
+
+  const rules = [
+    [
+      'Urgency & pressure',
+      ['urgent','immediately','today','within 24 hours','expires','act now','last warning','final notice'],
+      18,
+      'Creates time pressure so you may act before checking.'
+    ],
+    [
+      'Account / KYC threat',
+      ['account blocked','account suspended','update kyc','kyc expired','verify your account','sim blocked'],
+      25,
+      'Uses an account restriction or KYC warning to trigger action.'
+    ],
+    [
+      'Credential request',
+      ['share otp','send otp','enter otp','upi pin','password','cvv','card number'],
+      30,
+      'Mentions sensitive credentials. Never share OTP, PIN, CVV or passwords.'
+    ],
+    [
+      'Payment demand',
+      ['registration fee','processing fee','pay now','claim reward','collect request','refund fee'],
+      20,
+      'Requests money or payment approval that should be independently verified.'
+    ],
+    [
+      'Suspicious link language',
+      ['click here','verify through this link','open the link','http://','bit.ly','tinyurl'],
+      18,
+      'Encourages link use or contains a shortened/insecure URL pattern.'
+    ]
+  ];
+
+  const hits = rules
+    .filter(r => r[1].some(w => s.includes(w)))
+    .map(r => ({
+      name: r[0],
+      matched: r[1].filter(w => s.includes(w)),
+      explanation: r[3]
+    }));
+
+  const score = Math.min(
+    98,
+    hits.reduce((n,h) => n + (rules.find(r => r[0] === h.name)?.[2] || 0), 5)
+  );
+
+  return {
+    hits,
+    score,
+    level: score >= 65 ? 'High' : score >= 35 ? 'Medium' : 'Low',
+    confidence: hits.length ? 'Signals found' : 'No known rule matched'
+  };
+}
+
+function analyseUrl(value) {
+  const raw = value.trim();
+
+  if (!raw) return analyseMessage('');
+
+  let host = '';
+
+  try {
+    host = new URL(raw.includes('://') ? raw : `https://${raw}`)
+      .hostname.toLowerCase();
+  } catch {
+    return {
+      hits: [{
+        name: 'Invalid URL format',
+        matched: [],
+        explanation: 'The entered text could not be parsed as a web address.'
+      }],
+      score: 45,
+      level: 'Medium',
+      confidence: 'Format warning'
+    };
+  }
+
+  const hits = [];
+
+  if (/^\d{1,3}(\.\d{1,3}){3}$/.test(host)) {
+    hits.push({
+      name: 'IP address host',
+      matched: [host],
+      explanation: 'A raw IP address is unusual for many trusted consumer services.'
+    });
+  }
+
+  if (host.includes('xn--')) {
+    hits.push({
+      name: 'Punycode domain',
+      matched: [host],
+      explanation: 'Internationalized domain encoding can be abused to imitate familiar names.'
+    });
+  }
+
+  if (host.split('.').length > 4) {
+    hits.push({
+      name: 'Many subdomains',
+      matched: [host],
+      explanation: 'Long nested subdomains can make the true registered domain harder to notice.'
+    });
+  }
+
+  if (/bit\.ly|tinyurl|t\.co|goo\.gl|cutt\.ly/.test(host)) {
+    hits.push({
+      name: 'URL shortener',
+      matched: [host],
+      explanation: 'Shortened links hide the final destination until expanded.'
+    });
+  }
+
+  if (raw.startsWith('http://')) {
+    hits.push({
+      name: 'No HTTPS',
+      matched: ['http://'],
+      explanation: 'The connection is not encrypted with HTTPS.'
+    });
+  }
+
+  if (/login|verify|kyc|wallet|bank|secure|claim|reward/.test(host)) {
+    hits.push({
+      name: 'Sensitive keyword in domain',
+      matched: [host],
+      explanation: 'A domain containing trusted-service or urgency terms deserves closer inspection.'
+    });
+  }
+
+  const score = Math.min(92, 8 + hits.length * 19);
+
+  return {
+    hits,
+    score,
+    level: score >= 65 ? 'High' : score >= 35 ? 'Medium' : 'Low',
+    confidence: hits.length ? 'URL pattern signals found' : 'No obvious pattern matched'
+  };
+}
+
+/* ---------------- NAVIGATION ---------------- */
+
+function Sidebar({page,setPage,profile,onLogout,collapsed,setCollapsed}) {
+  return <aside className={`sidebar ${collapsed ? 'collapsed' : ''}`}>
+    <div className="side-head">
+      <Brand/>
+      <button
+        className="icon-only side-toggle"
+        onClick={() => setCollapsed(!collapsed)}
+      >
+        <Menu size={18}/>
+      </button>
+    </div>
+
+    <div className="side-caption">WORKSPACE</div>
+
+    <nav className="side-nav">
+      {nav.map(([id,label,Icon]) => (
+        <button
+          key={id}
+          className={page === id ? 'active' : ''}
+          onClick={() => setPage(id)}
+          title={label}
+        >
+          <Icon size={18}/>
+          <span>{label}</span>
+          {id === 'alerts' && <i className="nav-dot"/>}
+        </button>
+      ))}
+    </nav>
+
+    <div className="side-bottom">
+      <div className="profile-mini">
+        <div className="avatar">
+          {(profile.name || 'P').slice(0,1).toUpperCase()}
+        </div>
+        <div>
+          <b>{profile.name || 'User'}</b>
+          <small>Protected workspace</small>
+        </div>
+      </div>
+
+      <button className="side-logout" onClick={onLogout}>
+        <LogOut size={16}/> <span>Sign out</span>
+      </button>
+
+      <div className="side-version">PHISHSHIELD BHARAT · DEMO</div>
+    </div>
+  </aside>;
+}
+
+function Header({page,profile,onMenu}) {
+  const label = nav.find(x => x[0] === page)?.[1] || 'Overview';
+
+  return <header className="topbar-app">
+    <button className="icon-only mobile-menu" onClick={onMenu}>
+      <Menu/>
+    </button>
+
+    <div className="breadcrumb">
+      Workspace <ChevronRight size={14}/> <b>{label}</b>
+    </div>
+
+    <div className="top-actions">
+      <span className="live-status"><i/> Demo workspace</span>
+      <button className="top-avatar" title="Profile">
+        {(profile.name || 'P').slice(0,1).toUpperCase()}
+      </button>
+    </div>
+  </header>;
+}
+
+function Stat({label,value,detail,icon:Icon,tone='green'}) {
+  return <article className="stat-card">
+    <div className={`stat-icon ${tone}`}><Icon size={19}/></div>
+    <div>
+      <span>{label}</span>
+      <strong>{value}</strong>
+      <small>{detail}</small>
+    </div>
+  </article>;
+}
+
+/* ---------------- DASHBOARD ---------------- */
+
+function Dashboard({profile,history,setPage}) {
+  const high = history.filter(x => x.level === 'High').length;
+
+  const score = history.length
+    ? Math.max(
+        35,
+        100 - Math.min(
+          65,
+          high * 9 + history.filter(x => x.level === 'Medium').length * 4
+        )
+      )
+    : 92;
+
+  return <div className="page-content">
+    <div className="welcome-line">
+      <div>
+        <div className="eyebrow">YOUR PERSONAL SECURITY SPACE</div>
+        <h1>
+          Good {
+            new Date().getHours() < 12
+              ? 'morning'
+              : new Date().getHours() < 18
+                ? 'afternoon'
+                : 'evening'
+          }, {profile.name || 'there'} <span>✦</span>
+        </h1>
+        <p>Stay one step ahead of suspicious messages, links and digital scams.</p>
+      </div>
+
+      <div className="date-chip">
+        <Activity size={15}/> Security overview
+      </div>
+    </div>
+
+    <div className="hero-banner">
+      <div>
+        <span className="banner-kicker">
+          <Sparkles size={14}/> YOUR DIGITAL SAFETY COMPANION
+        </span>
+        <h2>Pause. Check. <em>Stay protected.</em></h2>
+        <p>Check suspicious content before you click, pay or share personal information.</p>
+        <Btn onClick={() => setPage('scanner')} icon={ScanSearch}>
+          Start a security scan
+        </Btn>
+      </div>
+
+      <div className="banner-shield">
+        <div className="shield-ring"><ShieldCheck size={62}/></div>
+        <span className="orbit-label label-a">CHECK</span>
+        <span className="orbit-label label-b">PROTECT</span>
+      </div>
+    </div>
+
+    <div className="stats-grid">
+      <Stat label="Total scans" value={history.length} detail="Saved on this device" icon={ScanSearch}/>
+      <Stat label="High-risk findings" value={high} detail="Review before acting" icon={ShieldAlert} tone="red"/>
+      <Stat
+        label="Medium-risk findings"
+        value={history.filter(x => x.level === 'Medium').length}
+        detail="Verify independently"
+        icon={AlertTriangle}
+        tone="amber"
+      />
+      <Stat label="Safety score" value={`${score}/100`} detail="Illustrative activity score" icon={ShieldCheck} tone="blue"/>
+    </div>
+
+    <div className="content-grid">
+      <section className="panel">
+        <div className="panel-head">
+          <div>
+            <h3>Quick actions</h3>
+            <p>Choose what you want to check today.</p>
+          </div>
+          <span className="subtle-label">GET STARTED</span>
+        </div>
+
+        <div className="quick-grid">
+          <button onClick={() => setPage('scanner')}>
+            <span className="quick-icon teal"><MessageSquareText/></span>
+            <b>Scan a message</b>
+            <small>SMS, email or chat</small>
+            <ArrowRight size={16}/>
+          </button>
+
+          <button onClick={() => setPage('scanner')}>
+            <span className="quick-icon blue"><Link2/></span>
+            <b>Check a URL</b>
+            <small>Inspect a suspicious link</small>
+            <ArrowRight size={16}/>
+          </button>
+
+          <button onClick={() => setPage('scanner')}>
+            <span className="quick-icon violet"><QrCode/></span>
+            <b>QR / screenshot</b>
+            <small>Review uploaded content</small>
+            <ArrowRight size={16}/>
+          </button>
+
+          <button onClick={() => setPage('quiz')}>
+            <span className="quick-icon amber"><Trophy/></span>
+            <b>Take a quiz</b>
+            <small>Practice scam awareness</small>
+            <ArrowRight size={16}/>
+          </button>
+        </div>
+      </section>
+
+      <section className="panel">
+        <div className="panel-head">
+          <div>
+            <h3>Recent activity</h3>
+            <p>Your latest checks</p>
+          </div>
+          <button className="text-btn" onClick={() => setPage('history')}>
+            View all <ArrowRight size={14}/>
+          </button>
+        </div>
+
+        {history.length ? (
+          <div className="recent-list">
+            {history.slice(0,4).map(x => (
+              <div className="recent-row" key={x.id}>
+                <span className={`recent-icon ${x.level.toLowerCase()}`}>
+                  <ShieldAlert size={16}/>
+                </span>
+                <div>
+                  <b>
+                    {x.kind === 'url'
+                      ? 'Website URL scan'
+                      : x.kind === 'phone'
+                        ? 'Phone number check'
+                        : 'Message scan'}
+                  </b>
+                  <small>
+                    {x.input.slice(0,55)}{x.input.length > 55 ? '…' : ''}
+                  </small>
+                </div>
+                <Tag level={x.level}/>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="empty-mini">
+            <ScanSearch size={24}/>
+            <b>No scans yet</b>
+            <span>Your scan results will appear here.</span>
+          </div>
+        )}
+      </section>
+    </div>
+
+    <div className="bottom-grid">
+      <section className="panel safety-panel">
+        <div className="panel-head">
+          <div>
+            <h3>Safety reminder</h3>
+            <p>Three habits that prevent common scams.</p>
+          </div>
+          <ShieldCheck className="panel-accent"/>
+        </div>
+
+        <div className="reminder-list">
+          <p><CheckCircle2/> Never share OTP, UPI PIN, CVV or passwords.</p>
+          <p><CheckCircle2/> Verify unexpected requests using official channels.</p>
+          <p><CheckCircle2/> Do not rush because a message says “urgent”.</p>
+        </div>
+      </section>
+
+      <section className="panel alert-preview">
+        <div className="panel-head">
+          <div>
+            <h3>Threat watch</h3>
+            <p>Common scam patterns to remember.</p>
+          </div>
+          <button className="text-btn" onClick={() => setPage('alerts')}>
+            Explore <ArrowRight size={14}/>
+          </button>
+        </div>
+
+        <div className="watch-pills">
+          <span>Fake KYC alerts</span>
+          <span>UPI collect requests</span>
+          <span>Fake job offers</span>
+          <span>OTP theft attempts</span>
+        </div>
+      </section>
+    </div>
+
+    <p className="disclaimer">
+      <LockKeyhole size={13}/> Your scan history is stored in this browser for this demo.
+      No server-side account or threat feed is connected.
+    </p>
+  </div>;
+}
+
+/* ---------------- SCANNER ---------------- */
+
+function Scanner({onSave}) {
+  const [mode,setMode] = useState('message');
+  const [input,setInput] = useState(sampleMessage);
+  const [result,setResult] = useState(null);
+  const [busy,setBusy] = useState(false);
+  const [file,setFile] = useState(null);
+  const [phone,setPhone] = useState('');
+
+  const run = () => {
+    setBusy(true);
+    setResult(null);
+
+    setTimeout(() => {
+      let r = mode === 'url'
+        ? analyseUrl(input)
+        : mode === 'phone'
+          ? {
+              hits: [{
+                name: 'No live reputation lookup connected',
+                matched: [phone],
+                explanation: 'This demo cannot confirm who owns this number. Treat unexpected payment or OTP requests cautiously.'
+              }],
+              score: 32,
+              level: 'Medium',
+              confidence: 'Manual review required'
+            }
+          : analyseMessage(input);
+
+      setResult(r);
+      setBusy(false);
+      onSave({kind:mode,input:mode === 'phone' ? phone : input,...r});
+    },650);
+  };
+
+  const upload = (e) => {
+    const f = e.target.files?.[0];
+
+    if (f) {
+      setFile(f);
+      setResult({
+        hits: [{
+          name: 'File received',
+          matched: [f.name],
+          explanation: 'The file preview is available, but OCR and QR decoding are not connected in this frontend demo. Paste any readable text or URL into the message/URL scanner for analysis.'
+        }],
+        score: 0,
+        level: 'Low',
+        confidence: 'Upload preview only'
+      });
+    }
+  };
+
+  const modes = [
+    ['message','Message',MessageSquareText],
+    ['url','Website URL',Link2],
+    ['qr','QR code',QrCode],
+    ['image','Screenshot',ImageIcon],
+    ['phone','Phone number',Phone],
+    ['website','Fake website',Globe]
+  ];
+
+  return <div className="page-content">
+    <div className="page-heading">
+      <div>
+        <div className="eyebrow">CHECK BEFORE YOU TRUST</div>
+        <h1>Security scanner</h1>
+        <p>Review suspicious messages, URLs and other scam signals.</p>
+      </div>
+      <span className="mode-badge"><Zap size={14}/> Rule-based demo</span>
+    </div>
+
+    <div className="scanner-layout">
+      <section className="panel scanner-panel">
+        <div className="panel-head">
+          <div>
+            <h3>What would you like to check?</h3>
+            <p>Select a scan type to begin.</p>
+          </div>
+          <span className="subtle-label">STEP 01</span>
+        </div>
+
+        <div className="scan-tabs">
+          {modes.map(([id,label,Icon]) => (
+            <button
+              key={id}
+              className={mode === id ? 'selected' : ''}
+              onClick={() => {
+                setMode(id);
+                setResult(null);
+                setFile(null);
+                setInput(id === 'message' ? sampleMessage : '');
+              }}
+            >
+              <Icon size={16}/>{label}
+            </button>
+          ))}
+        </div>
+
+        {['message','url','website'].includes(mode) && <>
+          <label className="input-label">
+            {mode === 'message'
+              ? 'Paste the suspicious message'
+              : mode === 'url'
+                ? 'Paste the website URL'
+                : 'Enter the website address'}
+          </label>
+
+          <textarea
+            value={input}
+            onChange={e => setInput(e.target.value)}
+            placeholder={
+              mode === 'message'
+                ? 'Paste SMS, WhatsApp or email content here…'
+                : 'https://example.com'
+            }
+            rows={7}
+          />
+
+          <div className="input-hint">
+            <LockKeyhole size={13}/> Avoid entering real passwords, OTPs, card details or private information.
+          </div>
+        </>}
+
+        {mode === 'phone' && <>
+          <label className="input-label">Suspicious phone number</label>
+          <input
+            className="big-input"
+            value={phone}
+            onChange={e => setPhone(e.target.value)}
+            placeholder="+91 98765 43210"
+          />
+          <div className="input-hint">
+            No live caller database is connected. This is a safety guidance demo, not a caller identity lookup.
+          </div>
+        </>}
+
+        {['qr','image'].includes(mode) && (
+          <label className="upload-box">
+            <input type="file" accept="image/*" onChange={upload}/>
+            <span className="upload-icon"><Upload size={24}/></span>
+            <b>
+              {file
+                ? file.name
+                : `Upload ${mode === 'qr' ? 'a QR code image' : 'a suspicious screenshot'}`}
+            </b>
+            <small>PNG, JPG or WEBP · Preview only in this demo</small>
+          </label>
+        )}
+
+        <div className="scan-actions">
+          <Btn
+            onClick={run}
+            disabled={
+              busy ||
+              (['message','url','website'].includes(mode) && !input.trim()) ||
+              (mode === 'phone' && !phone.trim())
+            }
+            icon={ScanSearch}
+          >
+            {busy ? 'Analysing…' : 'Analyse now'}
+          </Btn>
+
+          <button
+            className="text-btn"
+            onClick={() => {
+              setInput('');
+              setPhone('');
+              setResult(null);
+              setFile(null);
+            }}
+          >
+            <Trash2 size={14}/> Clear
+          </button>
+        </div>
+
+        <div className="scan-note">
+          <ShieldCheck size={15}/> Results are indicative pattern checks, not a guarantee that content is safe or malicious.
+        </div>
+      </section>
+
+      <aside className="panel side-info">
+        <div className="scanner-orb">
+          <div><ShieldCheck size={36}/></div>
+          <span className="scan-pulse"/>
+        </div>
+
+        <h3>Look for the warning signs</h3>
+        <p>Phishing messages often rely on urgency, impersonation, suspicious links or requests for secrets.</p>
+
+        <div className="signal-points">
+          <span><Zap/> Urgent or threatening language</span>
+          <span><KeyRound/> OTP, PIN or credential requests</span>
+          <span><FileText/> KYC or account suspension claims</span>
+          <span><Link2/> Suspicious links and payment pressure</span>
+        </div>
+
+        <div className="tip-box">
+          <b>Remember</b>
+          <p>A familiar keyword alone does not prove a scam. Context and independent verification matter.</p>
+        </div>
+      </aside>
+    </div>
+
+    {result && <section className="panel result-panel">
+      <div className="result-title">
+        <div>
+          <div className="eyebrow">SCAN RESULT</div>
+          <h2>Analysis complete</h2>
+        </div>
+        <Tag level={result.level}/>
+      </div>
+
+      <div className="result-overview">
+        <div className={`score-circle ${result.level.toLowerCase()}`}>
+          <strong>{result.score}</strong><small>/ 100</small>
+        </div>
+
+        <div>
+          <h3>
+            {result.level === 'High'
+              ? 'Multiple warning signs found'
+              : result.level === 'Medium'
+                ? 'Some warning signs need review'
+                : 'No strong known signals found'}
+          </h3>
+
+          <p>
+            {result.level === 'High'
+              ? 'Do not click links or share sensitive information until you verify independently.'
+              : result.level === 'Medium'
+                ? 'Pause and verify the sender through an official channel.'
+                : 'This basic check found few known patterns. That does not prove the content is safe.'}
+          </p>
+
+          <span className="confidence"><Eye size={13}/> {result.confidence}</span>
+        </div>
+      </div>
+
+      <div className="breakdown">
+        <div className="panel-head">
+          <div>
+            <h3>Why this result?</h3>
+            <p>{result.hits.length} indicator(s) identified</p>
+          </div>
+        </div>
+
+        {result.hits.length ? result.hits.map(h => (
+          <div className="reason-row" key={h.name}>
+            <span><AlertTriangle size={17}/></span>
+            <div>
+              <b>{h.name}</b>
+              <p>{h.explanation}</p>
+              {h.matched.length > 0 && <small>Matched: {h.matched.join(', ')}</small>}
+            </div>
+          </div>
+        )) : (
+          <div className="empty-mini">
+            <CheckCircle2/> No known keyword rules matched.
+          </div>
+        )}
+      </div>
+
+      <div className="advice-strip">
+        <b><ShieldCheck size={16}/> Recommended next steps</b>
+        <p>
+          Do not share OTP/PIN/password. Avoid unexpected links. Verify using the official app or website.
+          If money is lost in India, contact your bank and call 1930 promptly.
+        </p>
+      </div>
+
+      <div className="result-disclaimer">
+        <AlertTriangle size={14}/> Rule-based demo only. Risk score is not a probability.
+        OCR, QR decoding, AI and live reputation checks are not connected.
+      </div>
+    </section>}
+  </div>;
+}
+
+/* ---------------- HISTORY ---------------- */
+
+function HistoryPage({items,onDelete,onClear}) {
+  const [filter,setFilter] = useState('All');
+  const visible = items.filter(x => filter === 'All' || x.level === filter);
+
+  return <div className="page-content">
+    <div className="page-heading">
+      <div>
+        <div className="eyebrow">YOUR LOCAL ACTIVITY</div>
+        <h1>Scan history</h1>
+        <p>{items.length} saved scan(s) on this device.</p>
+      </div>
+      {items.length > 0 && (
+        <Btn variant="secondary" icon={Trash2} onClick={onClear}>Clear history</Btn>
+      )}
+    </div>
+
+    <div className="panel">
+      <div className="filter-row">
+        <div className="filter-tabs">
+          {['All','High','Medium','Low'].map(f => (
+            <button
+              className={filter === f ? 'active' : ''}
+              key={f}
+              onClick={() => setFilter(f)}
+            >
+              {f}
+            </button>
+          ))}
+        </div>
+        <span className="subtle-label">{visible.length} RESULTS</span>
+      </div>
+
+      {visible.length ? (
+        <div className="history-list">
+          {visible.map(item => (
+            <article className="history-item" key={item.id}>
+              <span className={`history-mark ${item.level.toLowerCase()}`}>
+                <ShieldAlert size={18}/>
+              </span>
+
+              <div className="history-copy">
+                <div>
+                  <b>
+                    {item.kind === 'url'
+                      ? 'URL scan'
+                      : item.kind === 'phone'
+                        ? 'Phone check'
+                        : 'Message scan'}
+                  </b>
+                  <Tag level={item.level}/>
+                </div>
+
+                <p>{item.input}</p>
+
+                <small>
+                  <Clock3 size={12}/> {new Date(item.date).toLocaleString()} · Score {item.score}/100
+                </small>
+              </div>
+
+              <button
+                className="icon-only"
+                onClick={() => onDelete(item.id)}
+                title="Delete"
+              >
+                <Trash2 size={16}/>
+              </button>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <div className="empty-state">
+          <History size={32}/>
+          <h3>No scans found</h3>
+          <p>Run a scan to see the result here.</p>
+        </div>
+      )}
+    </div>
+  </div>;
+}
+
+/* ---------------- THREAT ALERTS ---------------- */
+
+const alertItems = [
+  [
+    'Fake KYC / account block warning',
+    'A message claims your bank or SIM will be blocked unless you update KYC through a link.',
+    'Never use the message link. Open the official bank app or website yourself.',
+    'High'
+  ],
+  [
+    'UPI collect request',
+    'Someone says you must approve a collect request to receive a refund, prize or payment.',
+    'Receiving money does not require entering your UPI PIN. Decline unexpected requests.',
+    'High'
+  ],
+  [
+    'Fake job registration fee',
+    'A recruiter promises quick employment but asks for a registration or training fee.',
+    'Verify the employer on its official careers website. Be cautious of upfront fees.',
+    'Medium'
+  ],
+  [
+    'OTP / account takeover',
+    'A caller asks you to read out an OTP or approve an unfamiliar login.',
+    'Keep OTPs private, even if the caller claims to be support.',
+    'High'
+  ],
+  [
+    'Prize / scholarship claim',
+    'An unexpected reward requires a fee, bank details or OTP to release it.',
+    'Check the scheme on an official institution or government website.',
+    'Medium'
+  ]
+];
+
+function Alerts() {
+  return <div className="page-content">
+    <div className="page-heading">
+      <div>
+        <div className="eyebrow">STAY INFORMED</div>
+        <h1>Threat alert centre</h1>
+        <p>Common scam patterns and practical ways to respond.</p>
+      </div>
+      <span className="mode-badge"><Bell size={14}/> Awareness feed</span>
+    </div>
+
+    <div className="alert-banner">
+      <ShieldAlert size={25}/>
+      <div>
+        <b>Pause before you act.</b>
+        <p>Scammers create urgency, impersonate trusted organisations and ask for money or secrets.</p>
+      </div>
+    </div>
+
+    <div className="alert-grid">
+      {alertItems.map((a,i) => (
+        <article className="panel alert-card" key={a[0]}>
+          <div className="alert-card-top">
+            <span className="alert-number">0{i+1}</span>
+            <Tag level={a[3]}/>
+          </div>
+          <h3>{a[0]}</h3>
+          <p>{a[1]}</p>
+          <div className="safe-response">
+            <b><CheckCircle2 size={14}/> Safer response</b>
+            <span>{a[2]}</span>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <p className="disclaimer">
+      These are educational examples, not a live threat-intelligence feed or real-time alerts.
+    </p>
+  </div>;
+}
+
+/* ---------------- THREAT MAP ---------------- */
+
+function ThreatMap() {
+  const points = [
+    [18,28,'New Delhi'],
+    [31,55,'Mumbai'],
+    [53,37,'Kolkata'],
+    [65,68,'Hyderabad'],
+    [77,48,'Bengaluru'],
+    [84,76,'Chennai'],
+    [40,18,'Jaipur']
+  ];
+
+  return <div className="page-content">
+    <div className="page-heading">
+      <div>
+        <div className="eyebrow">VISUAL THREAT AWARENESS</div>
+        <h1>Threat activity map</h1>
+        <p>Illustrative India map visualization for the product demo.</p>
+      </div>
+      <span className="mode-badge"><Activity size={14}/> Simulated data</span>
+    </div>
+
+    <div className="map-layout">
+      <section className="panel map-panel">
+        <div className="panel-head">
+          <div>
+            <h3>India threat awareness view</h3>
+            <p>Sample markers · Not live incident reports</p>
+          </div>
+          <span className="live-status"><i/> DEMO</span>
+        </div>
+
+        <div className="india-map">
+          <div className="map-gridlines"/>
+
+          <svg viewBox="0 0 600 520" role="img" aria-label="Stylized illustrative map of India">
+            <path d="M215 35 L260 49 287 75 323 91 346 128 383 145 397 181 427 205 407 244 425 275 397 306 388 344 356 368 340 414 311 451 280 426 258 390 225 374 205 342 177 317 160 281 133 251 151 218 141 185 163 154 175 119 197 91 199 59Z"/>
+          </svg>
+
+          {points.map((p,i) => (
+            <span
+              key={p[2]}
+              className={`map-point p${i}`}
+              style={{left:`${p[0]}%`,top:`${p[1]}%`}}
+              title={p[2]}
+            />
+          ))}
+
+          <div className="map-legend">
+            <span><i/> Illustrative awareness marker</span>
+            <span><i/> Sample location</span>
+          </div>
+        </div>
+      </section>
+
+      <section className="panel map-side">
+        <h3>Demo locations</h3>
+        <p>Locations below are illustrative labels, not verified reports.</p>
+
+        {points.map(p => (
+          <div className="location-row" key={p[2]}>
+            <MapPinned size={16}/>
+            <div>
+              <b>{p[2]}</b>
+              <small>Awareness demo</small>
+            </div>
+            <span className="map-status">Sample</span>
+          </div>
+        ))}
+      </section>
+    </div>
+  </div>;
+}
+
+/* ---------------- QUIZ ---------------- */
+
+const questions = [
+  {
+    q: 'A caller asks you to share an OTP to stop your bank account from being blocked. What should you do?',
+    o: [
+      'Share it if they know your name',
+      'Never share it; contact your bank through official channels',
+      'Send a screenshot of the OTP'
+    ],
+    a: 1,
+    why: 'Banks and legitimate support teams should never ask you to disclose your OTP.'
+  },
+  {
+    q: 'Someone sends a UPI collect request saying it will credit a refund. What is safest?',
+    o: [
+      'Enter your UPI PIN to receive the money',
+      'Approve quickly before it expires',
+      'Decline unexpected requests and verify independently'
+    ],
+    a: 2,
+    why: 'Entering a UPI PIN authorizes a payment; it is not required to receive money.'
+  },
+  {
+    q: 'A job offer asks for a registration fee before an interview. What is a warning sign?',
+    o: [
+      'Upfront payment request',
+      'A company careers page',
+      'A scheduled interview'
+    ],
+    a: 0,
+    why: 'Upfront fees for guaranteed jobs are a common recruitment scam pattern.'
+  },
+  {
+    q: 'You receive a KYC update link in an unexpected SMS. What should you do?',
+    o: [
+      'Open it and enter details',
+      'Use the bank’s official app or known website instead',
+      'Forward it to friends'
+    ],
+    a: 1,
+    why: 'Do not use unexpected message links for account or identity updates.'
+  }
+];
+
+function Quiz() {
+  const [answers,setAnswers] = useState({});
+  const [submitted,setSubmitted] = useState(false);
+  const score = questions.filter((q,i) => answers[i] === String(q.a)).length;
+
+  return <div className="page-content">
+    <div className="page-heading">
+      <div>
+        <div className="eyebrow">LEARN TO SPOT THE SIGNS</div>
+        <h1>Phishing awareness quiz</h1>
+        <p>Test your instincts with realistic scam scenarios.</p>
+      </div>
+      <span className="mode-badge"><Trophy size={14}/> 4 questions</span>
+    </div>
+
+    <div className="quiz-wrap">
+      {questions.map((q,i) => (
+        <section className="panel quiz-card" key={q.q}>
+          <div className="quiz-q-head">
+            <span>QUESTION 0{i+1}</span>
+            {submitted && <Tag level={answers[i] === String(q.a) ? 'Low' : 'High'}/>}
+          </div>
+
+          <h3>{q.q}</h3>
+
+          <div className="quiz-options">
+            {q.o.map((o,j) => (
+              <label
+                key={o}
+                className={`${answers[i] === String(j) ? 'chosen' : ''} ${submitted && j === q.a ? 'correct' : ''}`}
+              >
+                <input
+                  type="radio"
+                  name={`q${i}`}
+                  value={j}
+                  checked={answers[i] === String(j)}
+                  disabled={submitted}
+                  onChange={e => setAnswers({...answers,[i]:e.target.value})}
+                />
+                <span>{String.fromCharCode(65+j)}</span>{o}
+              </label>
+            ))}
+          </div>
+
+          {submitted && <div className="quiz-explain"><CheckCircle2 size={16}/>{q.why}</div>}
+        </section>
+      ))}
+
+      <div className="quiz-footer">
+        {submitted ? <>
+          <div className="quiz-score">
+            <Trophy size={20}/>
+            <b>Your score: {score}/{questions.length}</b>
+            <span>
+              {score === 4
+                ? 'Excellent work!'
+                : score >= 2
+                  ? 'Good effort. Keep learning.'
+                  : 'Review the explanations and try again.'}
+            </span>
+          </div>
+          <Btn onClick={() => {setAnswers({});setSubmitted(false);}} variant="secondary">
+            Try again
+          </Btn>
+        </> : (
+          <Btn
+            onClick={() => setSubmitted(true)}
+            disabled={Object.keys(answers).length !== questions.length}
+          >
+            Submit answers
+          </Btn>
+        )}
+      </div>
+    </div>
+  </div>;
+}
+
+/* ---------------- EMERGENCY HELP ---------------- */
+
+function Emergency() {
+  return <div className="page-content">
+    <div className="page-heading">
+      <div>
+        <div className="eyebrow">IF YOU THINK YOU HAVE BEEN SCAMMED</div>
+        <h1>Emergency fraud help</h1>
+        <p>Act quickly, preserve evidence and contact the right official channels.</p>
+      </div>
+      <span className="mode-badge danger-mode"><LifeBuoy size={14}/> Important</span>
+    </div>
+
+    <div className="emergency-hero">
+      <div className="emergency-icon"><LifeBuoy size={30}/></div>
+      <div>
+        <span>INDIA · FINANCIAL CYBER FRAUD</span>
+        <h2>Call 1930 promptly</h2>
+        <p>
+          If money has been lost through a cyber financial fraud, contact the national
+          cyber fraud helpline as soon as possible and inform your bank/payment provider.
+        </p>
+        <a href="tel:1930" className="btn primary">
+          Call 1930 <ArrowRight size={15}/>
+        </a>
+      </div>
+    </div>
+
+    <div className="emergency-grid">
+      <section className="panel">
+        <h3>What to do immediately</h3>
+        <ol className="steps-list">
+          <li>
+            <b>Contact your bank or payment app</b>
+            <span>Ask them to report the transaction and secure your account.</span>
+          </li>
+          <li>
+            <b>Call the cyber fraud helpline</b>
+            <span>In India, dial 1930 promptly for financial cyber fraud.</span>
+          </li>
+          <li>
+            <b>Preserve evidence</b>
+            <span>Keep transaction IDs, screenshots, phone numbers, URLs and message details.</span>
+          </li>
+          <li>
+            <b>Report through the official portal</b>
+            <span>Use the National Cyber Crime Reporting Portal.</span>
+          </li>
+          <li>
+            <b>Secure your accounts</b>
+            <span>Change compromised passwords and revoke unknown sessions or app access.</span>
+          </li>
+        </ol>
+      </section>
+
+      <section className="panel official-links">
+        <h3>Official resources</h3>
+        <a href="https://cybercrime.gov.in/" target="_blank" rel="noreferrer">
+          <Globe/> National Cyber Crime Reporting Portal <ExternalLink size={14}/>
+        </a>
+        <a href="https://www.npci.org.in/" target="_blank" rel="noreferrer">
+          <ShieldCheck/> NPCI information <ExternalLink size={14}/>
+        </a>
+        <a href="https://www.rbi.org.in/" target="_blank" rel="noreferrer">
+          <FileText/> Reserve Bank of India <ExternalLink size={14}/>
+        </a>
+
+        <div className="tip-box">
+          <b>Important</b>
+          <p>Never pay someone who promises to recover your lost money for an advance fee. Verify all help channels independently.</p>
+        </div>
+      </section>
+    </div>
+  </div>;
+}
+
+/* ---------------- PROFILE ---------------- */
+
+function Profile({profile,onUpdate}) {
+  const [form,setForm] = useState(profile);
+  const [saved,setSaved] = useState(false);
+  const update = (k,v) => setForm({...form,[k]:v});
+
+  return <div className="page-content">
+    <div className="page-heading">
+      <div>
+        <div className="eyebrow">ACCOUNT & PREFERENCES</div>
+        <h1>My profile</h1>
+        <p>Manage your account details and workspace preferences.</p>
+      </div>
+      <span className="mode-badge"><UserRound size={14}/> Personal account</span>
+    </div>
+
+    <div className="profile-layout">
+      <section className="panel profile-card">
+        <div className="profile-hero">
+          <div className="profile-avatar">
+            {(form.name || 'P').slice(0,1).toUpperCase()}
+          </div>
+          <div>
+            <h3>{form.name}</h3>
+            <span>PhishShield user account</span>
+          </div>
+        </div>
+
+        <div className="profile-fields">
+          <Field
+            label="First name"
+            icon={UserRound}
+            value={form.name}
+            onChange={e => update('name',e.target.value)}
+          />
+
+          <Field label="Email address" icon={Mail} value={form.email} readOnly/>
+          <Field label="Phone number" icon={Smartphone} value={form.phone} readOnly/>
+
+          <label className="field">
+            <span>Preferred language</span>
+            <div className="field-wrap">
+              <Languages size={17}/>
+              <select
+                value={form.language || 'English'}
+                onChange={e => update('language',e.target.value)}
+              >
+                <option>English</option>
+                <option>Hindi</option>
+                <option>Hinglish</option>
+              </select>
+            </div>
+          </label>
+
+          <Btn
+            onClick={() => {
+              onUpdate(form);
+              setSaved(true);
+              setTimeout(() => setSaved(false),2200);
+            }}
+            icon={CheckCircle2}
+          >
+            Save profile
+          </Btn>
+
+          {saved && <span className="success-text">Profile preferences saved on this device.</span>}
+        </div>
+      </section>
+
+      <section className="panel preference-panel">
+        <h3>Privacy & workspace</h3>
+        <div className="preference-row">
+          <span><LockKeyhole/> Local demo storage</span>
+          <b>Enabled</b>
+        </div>
+        <div className="preference-row">
+          <span><Bell/> Threat notifications</span>
+          <b>Demo only</b>
+        </div>
+        <div className="preference-row">
+          <span><Globe/> Language support</span>
+          <b>UI preference</b>
+        </div>
+        <div className="tip-box">
+          <b>Account information</b>
+          <p>This is a frontend demo. Real account authentication and password security require a backend.</p>
+        </div>
+      </section>
+    </div>
+  </div>;
+}
+
+/* ---------------- MAIN APP ---------------- */
+
+export default function App() {
+  const [profile,setProfile] = useState(() => readStore().profile || null);
+  const [page,setPage] = useState('overview');
+  const [collapsed,setCollapsed] = useState(false);
+  const [mobileOpen,setMobileOpen] = useState(false);
+  const [history,setHistory] = useState(() => readStore().history || []);
+
+  useEffect(() => {
+    localStorage.setItem(STORE,JSON.stringify({profile,history}));
+  },[profile,history]);
+
+  const completeAuth = p => {
+    setProfile(p);
+    setPage('overview');
+  };
+
+  const logout = () => {
+    setProfile(null);
+    setPage('overview');
+  };
+
+  const addScan = s => setHistory(old => [
+    {...s,id:Date.now(),date:new Date().toISOString()},
+    ...old
+  ].slice(0,100));
+
+  const clearHistory = () => {
+    if (window.confirm('Delete all scan history saved in this browser?')) {
+      setHistory([]);
+    }
+  };
+
+  if (!profile) return <Auth onDone={completeAuth}/>;
+
+  return <div className="app-shell">
+    <Sidebar
+      page={page}
+      setPage={p => {setPage(p);setMobileOpen(false);}}
+      profile={profile}
+      onLogout={logout}
+      collapsed={collapsed}
+      setCollapsed={setCollapsed}
+    />
+
+    {mobileOpen && (
+      <button
+        className="mobile-scrim"
+        onClick={() => setMobileOpen(false)}
+        aria-label="Close navigation"
+      />
+    )}
+
+    <main className={`main-area ${collapsed ? 'expanded' : ''}`}>
+      <Header
+        page={page}
+        profile={profile}
+        onMenu={() => setMobileOpen(true)}
+      />
+
+      {page === 'overview'
+        ? <Dashboard profile={profile} history={history} setPage={setPage}/>
+        : page === 'scanner'
+          ? <Scanner onSave={addScan}/>
+          : page === 'history'
+            ? <HistoryPage
+                items={history}
+                onDelete={id => setHistory(h => h.filter(x => x.id !== id))}
+                onClear={clearHistory}
+              />
+            : page === 'alerts'
+              ? <Alerts/>
+              : page === 'map'
+                ? <ThreatMap/>
+                : page === 'quiz'
+                  ? <Quiz/>
+                  : page === 'help'
+                    ? <Emergency/>
+                    : <Profile profile={profile} onUpdate={setProfile}/>
+      }
+
+      <footer className="app-footer">
+        <Brand/>
+        <span>Pause. Check. Stay protected. <b>·</b> Frontend demo</span>
+      </footer>
+    </main>
+  </div>;
 }
