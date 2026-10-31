@@ -1,0 +1,9 @@
+{
+    "model_name": "FacebookAI/xlm-roberta-base",
+    "max_length": 96,
+    "labels": [
+        "LEGITIMATE",
+        "SCAM"
+    ],
+    "method": "Frozen XLM-RoBERTa embeddings + Logistic Regression"
+}
